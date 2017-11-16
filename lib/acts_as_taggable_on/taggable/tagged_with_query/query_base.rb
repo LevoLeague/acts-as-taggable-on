@@ -42,7 +42,7 @@ module ActsAsTaggableOn::Taggable::TaggedWithQuery
       if options[:wild].present?
         matches_attribute.matches_any(tag_list.map{|tag| "%#{escaped_tag(tag)}%"}, "!")
       else
-        matches_attribute.matches_any(tag_list.map{|tag| "#{escaped_tag(tag)}"}, "!")
+        matches_attribute.eq_any(ActsAsTaggableOn.strict_case_match ? tag_list : tag_list.map{|tag| tag.downcase})
       end
     end
 
